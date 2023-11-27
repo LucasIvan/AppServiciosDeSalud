@@ -19,7 +19,7 @@ public class ThymeleafConfig implements WebMvcConfigurer {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
-        resolver.setPrefix("classpath:/templates/");
+        resolver.setPrefix("classpath:/templates");
         resolver.setSuffix(".html");
         resolver.setTemplateMode("html");
         return resolver;
