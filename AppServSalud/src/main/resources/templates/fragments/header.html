@@ -347,7 +347,7 @@
             </div>
         </div>
     </div>
-    <div th:replace="/fragments/spinner :: div"></div>
+    <div th:replace="fragments/spinner :: div"></div>
     <script th:inline="javascript">
         const botones = document.querySelectorAll('button[id^="notificacion-"]');
         const botones_array = Array.from(botones);
