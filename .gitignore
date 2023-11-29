@@ -1,9 +1,22 @@
-AppServSalud/src/main/resources/*.properties
 HELP.md
+
+### MVN ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/src/**/*.properties
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn
+mvnw
+mvnw.cmd
 
 ### STS ###
 .apt_generated
@@ -29,7 +42,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-/src/main/resources/*.properties
+nb-configuration.xml
 
 ### VS Code ###
 .vscode/

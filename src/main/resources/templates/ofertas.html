@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaft.org"
+    xmlns:data-th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+    <head th:replace="fragments/head :: head"></head>
+
+    <head>
+        <style>
+            #paginacion {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            #paginacion>a {
+                padding: 10px;
+                border-radius: 10px;
+                background-color: cornflowerblue;
+                color: white;
+                text-decoration: none;
+            }
+
+            #numeros {
+                display: flex;
+                flex-direction: row;
+            }
+
+            #numeros>a {
+                margin: 0 5px;
+                padding: 5px 10px;
+                border-radius: 10px;
+                background-color: cornflowerblue;
+                color: white;
+                text-decoration: none;
+                transition: all 0.5s linear;
+            }
+
+            #numeros>a:hover {
+                background-color: #0d6efd;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header th:replace="fragments/header :: header"></header>
+        <div th:replace="fragments/toast :: div"></div>
+
+        <div id="turnos">
+            <div>
+                <h3>Listado Ofertas</h3>
+                <div>
+                    <table class="table container">
+                        <thead>
+                            <tr>
+                                <th>Especialidad</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Detalle</th>
+                                <th>Ubicacion</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="oferta : ${ofertas.content}">
+                                <td th:text="${oferta.profesional.especialidad.name}"></td>
+                                <td th:text="${oferta.profesional.nombre}"></td>
+                                <td th:text="${oferta.profesional.apellido}"></td>
+                                <td th:text="${#dates.format(oferta.fecha, 'dd/MM/yyyy')}"></td>
+                                <td th:text="${oferta.horario.name}"></td>
+                                <td th:text="${oferta.detalle}"></td>
+                                <td th:text="${oferta.ubicacion}"></td>
+                                <td th:text="${oferta.precio}"></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+            <div
+                th:if="${ofertas.content == null || ofertas.content.isEmpty}"
+                class="container"
+            >
+                <p>No hay ofertas disponibles</p>
+            </div>
+        </div>
+        <div
+            id="paginacion"
+            class="container"
+        >
+            <a
+                disabled="true"
+                th:href="@{/oferta/listar(page=${ofertas.number} - 1,size=30)}"
+            >Anterior</a>
+            <div
+                th:each="i : ${#numbers.sequence(0, ofertas.totalPages - 1)}"
+                id="numeros"
+            >
+                <a
+                    th:href="@{/oferta/listar(page=${i}, size=30)}"
+                    th:text="${i + 1}"
+                ></a>
+            </div>
+            <a
+                th:if="${!ofertas.last}"
+                th:href="@{/oferta/listar(page=${ofertas.number} + 1,size=12)}"
+            >Siguiente</a>
+        </div>
+
+        <footer th:replace="fragments/footer :: footer"></footer>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+        <script th:src="@{/js/toast.js}"></script>
+        <script>
+            document.getElementById("close").addEventListener("click", () => {
+                document.getElementById("buscador").style.width = "0";
+                document.querySelectorAll("#buscador>form >div> input").forEach((e) => {
+                    e.style.width = "0px";
+                    e.style.padding = "0px";
+                });
+                document.querySelectorAll("#buscador>form >div>div> label").forEach((e) => {
+                    e.style.width = "0px";
+                    e.style.padding = "0px";
+                });
+                document.querySelectorAll("#buscador>form >div>div> select").forEach((e) => {
+                    e.style.width = "0px";
+                    e.style.padding = "0px";
+                });
+                document.querySelectorAll("#buscador>form >div> label").forEach((e) => {
+                    e.style.width = "0px";
+                    e.style.padding = "0px";
+                });
+                document.querySelectorAll("#buscador>form>div>select").forEach((e) => {
+                    e.style.width = "0px";
+                    e.style.padding = "0px";
+                });
+                document.getElementById("show-buscador").style.display = "block";
+            })
+
+            document.getElementById("show-buscador").addEventListener("click", () => {
+                document.getElementById("buscador").style.width = "30%";
+                document.querySelectorAll("#buscador>form >div> input").forEach((e) => {
+                    e.style.width = "100%";
+                    e.style.padding = "10px";
+                });
+                document.querySelectorAll("#buscador>form >div>div> label").forEach((e) => {
+                    e.style.display = "block";
+                    e.style.width = "100%";
+                    e.style.padding = "10px";
+                });
+                document.querySelectorAll("#buscador>form >div>div> select").forEach((e) => {
+                    e.style.width = "100%";
+                    e.style.padding = "10px";
+                });
+                document.querySelectorAll("#buscador>form >div> label").forEach((e) => {
+                    e.style.display = "block";
+                    e.style.width = "100%";
+                    e.style.padding = "10px";
+                });
+                document.querySelectorAll("#buscador>form>div>select").forEach((e) => {
+                    e.style.width = "100%";
+                    e.style.padding = "10px";
+                });
+                document.getElementById("show-buscador").style.display = "none";
+            })
+
+            document.getElementById("especialidad-crear").addEventListener("change", e => {
+                fetch(
+                    `http://localhost:8080/datos/listarPorEspecialidad?especialidad=${e.target.value}`
+                ).then(res => res.json()).then(data => {
+                    const select = document.getElementById("profesional-crear");
+                    select.innerHTML = "";
+                    data.forEach(profesional => {
+                        const option = document.createElement("option");
+                        option.value = profesional.id;
+                        option.innerText = `${profesional.nombre} ${profesional.apellido}`;
+                        select.appendChild(option);
+                    })
+                }
+                )
+            })
+            document.getElementById("fecha-crear").addEventListener("change", e => {
+                fetch(
+                    `http://localhost:8080/datos/ofertas?fecha=${e.target.value}&idProfesional=${document.getElementById("profesional-crear").value}`
+                ).then(res => res.json()).then(data => {
+                    const select = document.getElementById("horarios-crear");
+                    select.innerHTML = "";
+                    if (data.length != 0) {
+                        data.forEach(horario => {
+                            const option = document.createElement("option");
+                            option.value = horario;
+                            option.innerText = horario;
+                            select.appendChild(option);
+                        })
+                    } else {
+                        const option = document.createElement("option");
+                        option.innerText = "No hay turnos para el dia seleccionado";
+                        select.appendChild(option);
+                    }
+                }
+                )
+
+
+            })
+        </script>
+    </body>
+
+</html>
