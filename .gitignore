@@ -1,11 +1,12 @@
 HELP.md
+logs
+.env
 
 ### MVN ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/src/**/*.properties
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
