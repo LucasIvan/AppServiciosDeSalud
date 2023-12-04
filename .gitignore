@@ -1,6 +1,7 @@
 HELP.md
 logs
 .env
+*.pem
 
 ### MVN ###
 target/
